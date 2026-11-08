@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#000000">
+<title>charts</title>
+<script>
+  // why: one address for every device; a watch-sized screen gets the watch view of the same page.
+  // why: Solve shows this page in a frame as its candles block (?view=embed); the block carries the title.
+  if (new URLSearchParams(location.search).get("view") === "embed") document.documentElement.classList.add("embed");
+  else if (Math.min(screen.width, screen.height) < 300) {
+    const query = new URLSearchParams(location.search);
+    query.set("view", "watch");
+    location.replace(`/?${query}`);
+  }
+</script>
+<link rel="manifest" href="/manifest.webmanifest" crossorigin="use-credentials">
+<link rel="apple-touch-icon" href="/static/icons/icon-180.png">
+<link rel="stylesheet" href="/static/tv.css">
+<link rel="stylesheet" href="/static/tv_sheets.css">
+<link rel="modulepreload" href="/static/vendor/lightweight-charts-drawing.es.js">
+<link rel="modulepreload" href="/static/tv_app.js">
+<link rel="modulepreload" href="/static/tv_bollinger_band.js">
+<link rel="modulepreload" href="/static/tv_bottom_bar.js">
+<link rel="modulepreload" href="/static/tv_chart_setup.js">
+<link rel="modulepreload" href="/static/tv_drawing_persistence.js">
+<link rel="modulepreload" href="/static/tv_drawing_toolbar.js">
+<link rel="modulepreload" href="/static/tv_icons.js">
+<link rel="modulepreload" href="/static/tv_layers_sheet.js">
+<link rel="modulepreload" href="/static/tv_legend.js">
+<link rel="modulepreload" href="/static/tv_price_axis_overlay.js">
+<link rel="modulepreload" href="/static/tv_selection_bar.js">
+<link rel="modulepreload" href="/static/tv_sheet.js">
+<link rel="modulepreload" href="/static/tv_symbol_search.js">
+<link rel="modulepreload" href="/static/tv_tool_catalogue.js">
+<link rel="modulepreload" href="/static/tv_touch_offset_layer.js">
+</head>
+<body class="tv">
+<header class="tv-header">
+  <button id="symbol-button" class="tv-symbol-button" aria-label="Symbol search">XAU_USD</button>
+  <div id="tf-strip" class="tv-tf-strip" role="toolbar" aria-label="Timeframe"></div>
+</header>
+<main id="chart-stage" class="tv-stage">
+  <div id="chart" class="tv-chart"></div>
+  <div class="tv-legend-block">
+    <div id="legend-title" class="tv-legend-title"></div>
+    <div id="legend-price" class="tv-legend-price"></div>
+    <div id="legend" class="tv-legend"></div>
+    <button id="legend-toggle" class="tv-legend-toggle" aria-label="Collapse indicator legend"></button>
+  </div>
+  <div id="crosshair-dot" class="tv-crosshair-dot" hidden></div>
+  <div id="placement-controls" class="tv-placement-controls" hidden></div>
+  <div id="toast" class="tv-toast" role="status" hidden></div>
+</main>
+<nav id="bottom-bar" class="tv-bottom-bar" aria-label="Chart tools"></nav>
+<script src="/static/vendor/lightweight-charts.js"></script>
+<script type="module" src="/static/tv_app.js"></script>
+</body>
+</html>

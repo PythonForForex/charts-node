@@ -1,0 +1,12 @@
+TraderSwift Charts
+Copyright 2026 TraderSwift
+
+This product includes TradingView Lightweight Charts™
+(web/vendor/lightweight-charts.js, v5.0.8, Apache License 2.0):
+
+TradingView Lightweight Charts™
+Copyright (с) 2025 TradingView, Inc. https://www.tradingview.com/
+
+This product includes lightweight-charts-drawing 0.6.3
+(web/vendor/lightweight-charts-drawing.es.js, MIT License, Copyright (c) 2026 deepentropy);
+its licence is in web/vendor/lightweight-charts-drawing.LICENSE.
