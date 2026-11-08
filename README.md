@@ -32,7 +32,7 @@ The front end calls `/api/instruments`, `/api/bars`, `/api/live` and `/api/quote
 
 ## Status
 
-Charts is in dev mode. TraderSwift's node is live for its own use. Still to come: a public test feed, the data node software (independent ingestion, segment hashes, two-of-three checks), a usage meter, and a list of front ends with votes. Expect changes. The interface keeps every published version working.
+Charts is in dev mode. TraderSwift's node is live for its own use. A public test feed (Hyperliquid) is in [docs/DATA_INTERFACE.md](docs/DATA_INTERFACE.md). Still to come: the data node software (independent ingestion, segment hashes, two-of-three checks), a usage meter, and a list of front ends with votes. Expect changes. The interface keeps every published version working.
 
 ## Licences of what is bundled
 

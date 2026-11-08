@@ -6,7 +6,8 @@ Versions: **v1, 9 Nov 2026** (add `&v=1`) and **v0, 8 Nov 2026** (no `v`, unchan
 
 ## Reach
 
-- `https://charts.traderswift.io`, behind Cloudflare Access. There is no public test feed yet; milestone 1 adds one.
+- `https://charts.traderswift.io`, behind Cloudflare Access, for the node's own users.
+- **Public test feed**, no login, for anyone building a front end: `GET /public/v1/instruments` and `GET /public/v1/bars?venue=hyperliquid&symbol=BTC&tf=1h&bars=300` (optional `end_ts`), in the v1 shape below. Hyperliquid only for now; other venues join once their terms allow passing the data on. `bars` 1 to 1000 (default 300). CORS open (`Access-Control-Allow-Origin: *`). No live stream yet.
 - Every `/api/*` call needs an identity. Errors: `400 {"error"}` for bad input, `403 {"error"}` for identity, `404` for a hostname charts does not serve.
 
 ## Read
@@ -44,7 +45,7 @@ GET /api/bars?venue=binance&symbol=XAUUSDT&tf=1h&bars=3&v=1
 | No `segment_hash` | A served bar can be checked against the agreed hash of its segment | Data nodes (milestone 3) |
 | No `validated` label | A closed segment is validated by matching hashes from two other nodes | Data nodes |
 | No segment-hash endpoint (one symbol, one timeframe, one UTC day) | A client checks bars from one node against hashes from two others | Data nodes |
-| No public test feed, and no portable workspace (layouts, watchlists, drawings belonging to the account) | A stranger can build from the docs alone | Milestone 1 |
+| No portable workspace (layouts, watchlists, drawings belonging to the account) | A user keeps their setup when they change front end | Milestone 1 |
 | Usage not recorded | The meter: views per build, bytes per node, votes | Meter |
 
 Changes to this interface are versioned here and never break an earlier version without notice.
