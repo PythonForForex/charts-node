@@ -35,6 +35,8 @@ GET /api/bars?venue=binance&symbol=XAUUSDT&tf=1h&bars=3&v=1
 - **Decimal strings.** `open high low close volume` are strings, never JSON numbers. Read them with a decimal type. The rule: the shortest string that gives back the stored value exactly, written out with no exponent and no trailing zeros. Two nodes that hold the same stored value send the same bytes. Volume on a derived timeframe is a sum and may carry a long tail; it is still exact to what is stored.
 - **Provenance**, one per response (a response is one series from one node): `source_venue` (the venue the bars came from; Binance and Hyperliquid BTC are different series), `source_store` (`timescaledb` or `files`), `live_extended` (true when the newest bars may come from the venue's live 5-second feed and not the store), `node_id` (which node served it), `fetched_at` (unix ms, as a string, when the node read it).
 - **Status per bar**: `closed` (the bar's period has ended) or `live` (still forming). Nothing is `validated` yet; that label comes with segment hashes.
+- **`segment_hash` per bar**, on closed bars of a covered series once their UTC day has settled (two hours after it ends): the sha256 of that day's segment. Coverage today: Hyperliquid 1h, BNB BTC DOGE ETH HYPE SOL XRP.
+- **`GET /public/v1/segments?day=YYYY-MM-DD`** (no login): the node's segment list for a settled UTC day, `{"version", "day", "charter_version", "node_id", "candle_root", "segments": [{"venue", "symbol", "tf", "segment_hash", "bars"}]}`. Segment bytes: a line `venue,symbol,tf,day`, then one line per stored bar `time,open,high,low,close,volume` in the decimal-string rule, each ending in `\n`; `segment_hash` is its sha256. Root bytes: one line `venue,symbol,tf,segment_hash\n` per segment, sorted; `candle_root` is its sha256. Anyone can recompute both from the venue's own API: on 7 Nov, BTC, HYPE and DOGE from Hyperliquid's `candleSnapshot` gave the same hashes as the node.
 - **`/api/live?…&v=1`**: first an `event: provenance` with the same object, then `event: bar` in the v1 bar shape.
 - Any other `v` → 400. No `v` is v0, kept as it was.
 
@@ -42,9 +44,8 @@ GET /api/bars?venue=binance&symbol=XAUUSDT&tf=1h&bars=3&v=1
 
 | Gap | Why it matters | Lands with |
 |---|---|---|
-| No `segment_hash` | A served bar can be checked against the agreed hash of its segment | Data nodes (milestone 3) |
 | No `validated` label | A closed segment is validated by matching hashes from two other nodes | Data nodes |
-| No segment-hash endpoint (one symbol, one timeframe, one UTC day) | A client checks bars from one node against hashes from two others | Data nodes |
+| Only one node, and roots not yet anchored on the chain | Two nodes' anchors must agree for a day to be validated | Data nodes, after the chain's anchor message |
 | No portable workspace (layouts, watchlists, drawings belonging to the account) | A user keeps their setup when they change front end | Milestone 1 |
 | Usage not recorded | The meter: views per build, bytes per node, votes | Meter |
 

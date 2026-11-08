@@ -12,7 +12,7 @@ Charts is the market data subnet. Its nodes serve candles, live and historical, 
 
 - **The front end is yours.** The data interface stays the same whichever front end reads it. This repo has the chart TraderSwift uses, as a working example.
 - **Honest data.** Every response names the venue it came from and the node that served it. Prices are decimal strings, so two nodes holding the same bar send the same bytes. A Binance candle and a Hyperliquid candle for the same coin are different series and are never merged.
-- **Checked by agreement (planned).** Each data node will pull from the venue on its own. Each closed day of bars is hashed, and a bar counts as validated when two other nodes hold the same hash.
+- **Checked by agreement.** Each closed day of bars is hashed by a fixed rule anyone can recompute from the venue's own API (live now for Hyperliquid). Each data node will pull from the venue on its own, and a day counts as validated when two nodes publish the same hash on the chain (coming).
 
 ## Free and open source
 
