@@ -281,15 +281,14 @@ body.is-fullscreen .tv-header { display: none; }
 
 .tv-attribution {
   position: absolute;
-  top: 4px;
-  right: 72px;
+  bottom: 32px;
+  left: 46px;
   z-index: 3;
   font-size: 9px;
   line-height: 1.2;
   color: rgba(0, 0, 0, 0.45);
   text-decoration: none;
   max-width: 150px;
-  text-align: right;
 }
 
 .tv-toast {
